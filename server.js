@@ -25,7 +25,6 @@ app.get('/buzzwords', (req, res) => {
     res.json(buzz)
 })
 
-//post  --send raw data as json
 
 //POST - creates new buzz word object when "buzzWord" is a String and "points" is a Number and pushes into Buzz Array. 
 app.post('/buzzwords', (req,res) => {
@@ -36,6 +35,18 @@ app.post('/buzzwords', (req,res) => {
         res.json({ "success" : false });
     }
 });
+
+
+//PUT
+app.put("/buzzwords", (req, res) => {
+        const filterArr = buzzArr.filter(obj => obj.buzzWord === Object.values(req.body)[0])
+        if (filterArr) {
+        buzzArr.splice(buzzArr.indexOf(filterArr[0]), 1, req.body);
+        res.json({ "success": true });
+        } else {
+        res.json({ "success": false });
+        }
+        })
 
 
 //DELETE
@@ -58,6 +69,7 @@ app.post('/reset', (req,res) => {
     buzzArr.splice(0,buzzArr.length)
     res.json({ "success" : true })
 })
+
 
 app.listen(PORT, () => {
     console.log('SERVER LISTENING..')
